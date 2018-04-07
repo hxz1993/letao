@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>乐淘电商</title>
+  <title>一级分类</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.min.css">
   <link rel="stylesheet" href="lib/nprogress/nprogress.css">
@@ -25,7 +25,7 @@
   <!--菜单栏-->
   <div class="nav">
     <ul>
-      <li><a href="#"><i class="glyphicon glyphicon-user"></i><span>用户管理</span></a></li>
+      <li><a href="user.html"><i class="glyphicon glyphicon-user"></i><span>用户管理</span></a></li>
       <li>
         <a href="#" class="category"><i class="glyphicon glyphicon-list"></i><span>分类管理</span></a>
         <div class="child" style="display: none">
@@ -33,7 +33,7 @@
           <a href="second.html">二级分类</a>
         </div>
       </li>
-      <li><a href="#"><i class="glyphicon glyphicon-tags"></i><span>商品管理</span></a></li>
+      <li><a href="product.html"><i class="glyphicon glyphicon-tags"></i><span>商品管理</span></a></li>
     </ul>
   </div>
 </div>
@@ -51,15 +51,63 @@
 
     <!--路径导航-->
     <ol class="breadcrumb">
-      <li><a href="#">管理系统</a></li>
-      <li class="active">首页</li>
-
+      <li><a href="index.html">管理系统</a></li>
+      <li class="active">分类管理</li>
+      <li class="active">一级分类</li>
     </ol>
 
-    <!--内容-->
 
+    <!--内容-->
+    <div class="mian_body">
+      <!--按钮-->
+      <button class="mb_20 btn-default btn" id="addBtn">添加分类</button>
+      <table class="table table-bordered">
+        <thead >
+        <tr>
+          <th width="20%">序号</th>
+          <th width="80%">一级分类名</th>
+
+        </tr>
+        </thead>
+        <tbody>
+         <!--挖个坑-->
+        </tbody>
+      </table>
+
+      <!--分页dom结构-->
+      <div class="text-right">
+        <ul id="paginator"></ul>
+      </div>
+    </div>
   </div>
 </div>
+
+
+<!--添加分类模态框-->
+<div class="modal fade" id="addCategory">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <form id="form">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">添加分类</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+              <input type="text" name="categoryName" class="form-control"  placeholder="请输入一级分类名称">
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary" id="addConfirm">添加</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <!--退出登录的模态框-->
 <div class="modal fade" id="logoutModal">
@@ -83,7 +131,18 @@
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="lib/bootstrap-validator/js/bootstrapValidator.min.js"></script>
 <script src="lib/nprogress/nprogress.js"></script>
+<script src="lib/artTemplate/template-web.js"></script>
+<script src="lib/bootstrap-paginator/bootstrap-paginator.min.js"></script>
 <script src="js/common.js"></script>
-
+<script src="js/first.js"></script>
+<!--模板引擎-->
+<script type="text/html" id="firstTmp">
+  {{each rows v i}}
+  <tr>
+    <td>{{ (page-1) * size + i+1 }}</td>
+    <td>{{v.categoryName}}</td>
+  </tr>
+  {{/each}}
+</script>
 </body>
 </html>
