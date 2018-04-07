@@ -11,7 +11,6 @@ NProgress.configure({
 $(document).ajaxStart(function(){
   NProgress.start();
 });
-
 $(document).ajaxStop(function(){
   //模拟网络延迟
   setTimeout(function(){
@@ -19,10 +18,26 @@ $(document).ajaxStop(function(){
   },1000)
 })
 
+//在一进入页面进行登录状况获取，登录拦截
+if(location.href.indexOf("login.html")==-1){
+  $.ajax({
+    type:'get',
+    url:'/employee/checkRootLogin',
+    success:function(info){
+      console.log(info);
+      if(info.error===400){
+        location.href="login.html";
+      }
+    }
+
+
+  })
+}
+
 $(function(){
   //1-二级分类显示隐藏功能
   $(".category").click(function(){
-    $(".child").slideToggle();
+    $(".child").stop().slideToggle();
   });
 
   //2-顶部菜单图标切换类

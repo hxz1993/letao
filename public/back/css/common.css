@@ -105,8 +105,6 @@ a:active {
 /*右侧内容开始*/
 .lt_main{
   width: 100%;
-  height: 1000px;
-  background-color: pink;
   padding-left: 180px;
   padding-top:50px;
   transition: all 1s;
@@ -144,5 +142,11 @@ a:active {
 
 .breadcrumb {
   margin-top: 20px;
+}
+
+.main_body .echars_1,
+.main_body .echars_2{
+  width: 48%;
+  height: 400px;
 }
 /*右侧内容结束*/
