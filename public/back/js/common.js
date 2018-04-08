@@ -37,7 +37,7 @@ if(location.href.indexOf("login.html")==-1){
 $(function(){
   //1-二级分类显示隐藏功能
   $(".category").click(function(){
-    $(".child").stop().slideToggle();
+    $(this).next().stop().slideToggle();
   });
 
   //2-顶部菜单图标切换类

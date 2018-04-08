@@ -20,7 +20,7 @@ $(function(){
         //分页
         $("#paginator").bootstrapPaginator({
           bootstrapMajorVersion:3,
-          currentPage:1,
+          currentPage:info.page,
           totalPages:Math.ceil(info.total/info.size),
           onPageClicked:function(event, originalEvent, type,page){
             currentPage=page;//当前页
