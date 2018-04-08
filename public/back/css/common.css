@@ -87,7 +87,7 @@ a:active {
   display: block;
   height: 40px;
   line-height: 40px;
-  color: #fff;
+  color: #ccc;
   padding-left: 40px;
   border-left: 3px solid transparent;
 
@@ -101,6 +101,7 @@ a:active {
 .lt_aside .nav a.current {
   background-color: #1D1F21;
   border-left: 3px solid #006699;
+  color: #fff;
 }
 /*滑动类*/
 .lt_aside.hidemenu {
