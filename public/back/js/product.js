@@ -4,6 +4,7 @@
 $(function(){
   var currentPage=1;
   var pageSize=5;
+  var picArr=[];//用来保存图片对象
   function render(){
     $.ajax({
       type:'get',
@@ -92,10 +93,36 @@ $(function(){
     var txt=$(this).text();
     $('#dropdownText').text(txt);
     $('[name="brandId"]').val(id);
+
+    $("#form").data('bootstrapValidator').updateStatus("brandId", "VALID");
   });
 
   //5-上传图片
+  $("#fileupload").fileupload({
+    dataType:"json",
+    //e：事件对象
+    //data：图片上传后的对象，通过e.result.picAddr可以获取上传后的图片地址
+    done:function (e, data) {
+      console.log(data);
+      var picObj=data.result;
+      var picAddr=picObj.picAddr;
 
+      picArr.unshift(picObj);
+
+      $("#imgBox").prepend('<img src="'+ picAddr +'" width="100">');
+
+      if(picArr.length>3){
+        picArr.pop();
+        $("#imgBox img:last-of-type").remove();
+      }
+
+      //如果处理好，图片数组的长度为3，说明已经选择了三张图片，可以进行提交
+      //需要将表单picStatus的校验状态，设置成VALID
+      if(picArr.length==3){
+        $("#form").data('bootstrapValidator').updateStatus("brandLogo", "VALID");
+      }
+    }
+  });
 
 
   //6-表单校验
@@ -152,6 +179,12 @@ $(function(){
             message: '请输入商品的尺码'
           },
 
+          //正则校验
+          regexp: {
+            regexp: /\d{2}-\d{2}$/,
+            message: '尺码格式，必须是32-40'
+          }
+
         }
       },
       num: {
@@ -160,7 +193,17 @@ $(function(){
           notEmpty: {
             message: '请输入商品库存'
           },
-
+          //正则校验
+          // 数字: \d
+          // + 表示一个或多个
+          // * 表示零个或多个
+          // ? 表示零个或1个
+          // {n} 表示出现 n 次
+          //^开头  $结尾
+          regexp: {
+            regexp: /^[1-9]\d*$/,
+            message: '商品库存格式，必须是非零开头的数字'
+          }
         }
       },
       brandId: {
@@ -172,8 +215,59 @@ $(function(){
 
         }
       },
+      brandLogo: {
+        validators: {
+          //不能为空
+          notEmpty: {
+            message: '请上传三张图片'
+          },
+
+        }
+      },
+
     }
-  })
+  });
+
+  //7-注册表单验证成功事件
+  $("#form").on('success.form.bv', function (e) {
+    e.preventDefault();
+    //使用ajax提交逻辑
+    var parm=$("#form").serialize();
+    console.log(picArr);
+    parm+="&picName1="+picArr[0].picName+"&picAddr1"+picArr[0].picAddr;
+    parm+="&picName2="+picArr[1].picName+"&picAddr2"+picArr[1].picAddr;
+    parm+="&picName3="+picArr[2].picName+"&picAddr3"+picArr[2].picAddr;
+
+    $.ajax({
+      url:'/product/addProduct',
+      type:'post',
+      data:parm,
+      success:function(info){
+        console.log(info);
+
+        if(info.success){
+          //模态框隐藏
+          $("#addModal").modal("hide");
+
+          //重新渲染页面
+          currentPage=1;
+          render();
+
+          //重置表单校验状态
+          $("#form").data('bootstrapValidator').resetForm(true);
+
+          //下拉菜单文本重置
+          $("#dropdownText").text("请选择二级分类");
+
+          //图片重置
+          $("#imgBox img").remove();
+
+
+
+        }
+      }
+    })
+  });
 
 
 

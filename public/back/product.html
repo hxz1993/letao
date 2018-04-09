@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>二级分类</title>
+  <title>商品管理</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.min.css">
   <link rel="stylesheet" href="lib/nprogress/nprogress.css">
@@ -129,7 +129,7 @@
             <input type="text" name="proName" class="form-control"  placeholder="请输入商品的名称">
           </div>
           <div class="form-group">
-            <input type="text" name="proDesc" class="form-control"  placeholder="请输入商品的描述">
+            <textarea class="form-control" rows="3" name="proDesc" placeholder="请输入商品的描述"></textarea>
           </div>
           <div class="form-group">
             <input type="text" name="num" class="form-control"  placeholder="请输入商品的库存">
@@ -147,15 +147,18 @@
 
           <div class="form-group">
             <label class="btn-default btn" for="fileupload">上传图片</label>
-            <input type="file" name="pic1" data-url="/category/addSecondCategoryPic" id="fileupload" style="display: none">
+            <input type="file" name="pic1" data-url="/product/addProductPic" id="fileupload" style="display: none" multiple>
           </div>
           <div class="form-group" id="imgBox">
-            <img src="images/none.png" alt="" width="100">
+            <!--<img src="images/none.png" alt="" width="100">-->
+            <!--<img src="images/none.png" alt="" width="100">-->
+            <!--<img src="images/none.png" alt="" width="100">-->
+            <!--作用：标记当前图片有没上传三张图片-->
             <input type="hidden" name="brandLogo">
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" >取消</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
           <button type="submit" class="btn btn-primary" >添加</button>
         </div>
       </form>
