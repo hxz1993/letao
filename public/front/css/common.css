@@ -73,6 +73,10 @@ img {
   color: #fff;
   font-weight: 400;
   font-size: 18px;
+  width: 100%;
+  line-height: 45px;
+  margin: 0;
+
 }
 
 .lt_main {
